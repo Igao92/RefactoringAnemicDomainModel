@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Logic.Dtos;
 using Logic.Entities;
 using Logic.Repositories;
 using Logic.Services;
@@ -32,14 +33,48 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            return Json(customer);
+            var dto = new CustomerDto
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Email = customer.Email,
+                MoneySpent = customer.MoneySpent,
+                Status = customer.Status.ToString(),
+                StatusExpirationDate = customer.StatusExpirationDate,
+                PurchasedMovies = customer.PurchasedMovies.Select(s => new PurchasedMovieDto
+                {
+                    Price = s.Price,
+                    PurchaseDate = s.PurchaseDate,
+                    ExpirationDate = s.ExpirationDate,
+                    Movie = new MovieDto
+                    {
+                        Id = s.MovieId,
+                        Name = s.Movie.Name
+                    }
+                }).ToList()
+            };
+
+            return Json(dto);
+            //return Json(customer);
         }
 
         [HttpGet]
         public JsonResult GetList()
         {
             IReadOnlyList<Customer> customers = _customerRepository.GetList();
-            return Json(customers);
+
+            var dtos = customers.Select(s => new CustomerInListDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email,
+                MoneySpent = s.MoneySpent,
+                Status = s.Status.ToString(),
+                StatusExpirationDate = s.StatusExpirationDate
+            });
+
+            return Json(dtos);
+            //return Json(customers);
         }
 
         [HttpPost]
