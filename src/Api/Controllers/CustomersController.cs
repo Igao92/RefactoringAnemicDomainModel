@@ -78,7 +78,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Customer item)
+        public IActionResult Create([FromBody] CreateCustomerDto item)
         {
             try
             {
@@ -92,9 +92,16 @@ namespace Api.Controllers
                     return BadRequest("Email is already in use: " + item.Email);
                 }
 
-                item.Id = 0;
-                item.Status = CustomerStatus.Regular;
-                _customerRepository.Add(item);
+                var customer = new Customer
+                {
+                    Name = item.Name,
+                    Email = item.Email,
+                    MoneySpent = 0,
+                    Status = CustomerStatus.Regular,
+                    StatusExpirationDate = null
+                };
+
+                _customerRepository.Add(customer);
                 _customerRepository.SaveChanges();
 
                 return Ok();
@@ -107,7 +114,7 @@ namespace Api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(long id, [FromBody] Customer item)
+        public IActionResult Update(long id, [FromBody] UpateCustomerDto item)
         {
             try
             {
