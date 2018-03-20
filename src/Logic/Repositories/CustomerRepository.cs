@@ -22,8 +22,8 @@ namespace Logic.Repositories
         public Customer GetByEmail(string email)
         {
             return _unitOfWork
-                .Query<Customer>()
-                .SingleOrDefault(x => x.Email == email);
+                .Query<Customer>().FirstOrDefault();
+                //.SingleOrDefault(x => x.Email == email);
         }
     }
 }

@@ -10,7 +10,6 @@ C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\bin\Debug\Flue
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\bin\Debug\Iesi.Collections.xml
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\bin\Debug\NHibernate.xml
-C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.csprojResolveAssemblyReference.cache
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.csproj.CoreCompileInputs.cache
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.csproj.CopyComplete
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.dll

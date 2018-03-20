@@ -36,8 +36,8 @@ namespace Api.Controllers
             var dto = new CustomerDto
             {
                 Id = customer.Id,
-                Name = customer.Name,
-                Email = customer.Email,
+                Name = customer.Name.Value,
+                Email = customer.Email.Value,
                 MoneySpent = customer.MoneySpent,
                 Status = customer.Status.ToString(),
                 StatusExpirationDate = customer.StatusExpirationDate,
@@ -66,8 +66,8 @@ namespace Api.Controllers
             var dtos = customers.Select(s => new CustomerInListDto
             {
                 Id = s.Id,
-                Name = s.Name,
-                Email = s.Email,
+                Name = s.Name.Value,
+                Email = s.Email.Value,
                 MoneySpent = s.MoneySpent,
                 Status = s.Status.ToString(),
                 StatusExpirationDate = s.StatusExpirationDate
@@ -94,8 +94,8 @@ namespace Api.Controllers
 
                 var customer = new Customer
                 {
-                    Name = item.Name,
-                    Email = item.Email,
+                    Name = new CustomerName(item.Name),
+                    Email = new Email(item.Email),
                     MoneySpent = 0,
                     Status = CustomerStatus.Regular,
                     StatusExpirationDate = null
@@ -129,7 +129,7 @@ namespace Api.Controllers
                     return BadRequest("Invalid customer id: " + id);
                 }
 
-                customer.Name = item.Name;
+                customer.Name = new CustomerName(item.Name);
                 _customerRepository.SaveChanges();
 
                 return Ok();
