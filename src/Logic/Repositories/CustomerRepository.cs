@@ -19,11 +19,11 @@ namespace Logic.Repositories
                 .ToList();
         }
 
-        public Customer GetByEmail(string email)
+        public Customer GetByEmail(Email email)
         {
             return _unitOfWork
-                .Query<Customer>().FirstOrDefault();
-                //.SingleOrDefault(x => x.Email == email);
+                .Query<Customer>()
+                .SingleOrDefault(x => x.Email == email);
         }
     }
 }

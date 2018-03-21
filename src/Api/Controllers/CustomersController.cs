@@ -82,20 +82,26 @@ namespace Api.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+
+                var customerNameOnError = CustomerName.Create(item.Name);
+                var emailNameOnError = Email.Create(item.Name);
+
+                var result = Result.Combine(customerNameOnError, emailNameOnError);
+
+                if (result.IsFailure)
                 {
                     return BadRequest(ModelState);
                 }
 
-                if (_customerRepository.GetByEmail(item.Email) != null)
+                if (_customerRepository.GetByEmail(emailNameOnError.Value) != null)
                 {
                     return BadRequest("Email is already in use: " + item.Email);
                 }
 
                 var customer = new Customer
                 {
-                    Name = new CustomerName(item.Name),
-                    Email = new Email(item.Email),
+                    Name = customerNameOnError.Value,
+                    Email = emailNameOnError.Value,
                     MoneySpent = 0,
                     Status = CustomerStatus.Regular,
                     StatusExpirationDate = null
@@ -118,7 +124,10 @@ namespace Api.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+
+                var customerNameOnError = CustomerName.Create(item.Name);
+
+                if (customerNameOnError.IsFailure)
                 {
                     return BadRequest(ModelState);
                 }
@@ -129,7 +138,7 @@ namespace Api.Controllers
                     return BadRequest("Invalid customer id: " + id);
                 }
 
-                customer.Name = new CustomerName(item.Name);
+                customer.Name = customerNameOnError.Value;
                 _customerRepository.SaveChanges();
 
                 return Ok();
