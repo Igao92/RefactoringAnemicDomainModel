@@ -67,6 +67,7 @@
     <Compile Include="Entities\LicensingModel.cs" />
     <Compile Include="Entities\Movie.cs" />
     <Compile Include="Entities\PurchasedMovie.cs" />
+    <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\ValueObject.cs" />
     <Compile Include="Mappings\CustomerMap.cs" />
     <Compile Include="Mappings\MovieMap.cs" />
