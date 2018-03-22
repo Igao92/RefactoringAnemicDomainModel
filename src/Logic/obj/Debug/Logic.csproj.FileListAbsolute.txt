@@ -14,3 +14,4 @@ C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logi
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.csproj.CopyComplete
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.dll
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.pdb
+C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Logic\obj\Debug\Logic.csprojResolveAssemblyReference.cache

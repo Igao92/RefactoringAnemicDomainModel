@@ -34,5 +34,28 @@ namespace Logic.Entities
         {
             return Value.GetHashCode();
         }
+
+        /// <summary>
+        /// Esse metodo nos permite converter implicitamente um Value Object para uma string.
+        /// Referencia:https://docs.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/implicit
+        /// </summary>
+        /// <param name="customerName"></param>
+        public static implicit operator string(CustomerName customerName)
+        {
+            return customerName.Value;
+        }
+
+        /// <summary>
+        /// Esse metodo nos permite criar um Value Object atraves da string passada por parametro.
+        /// Nem toda string pode ser um CustomerName valido, por isso precisa ser feito explicitamente.
+        /// Exemplo: string str = (string)obj; -> Nesse caso, toda string pode ser um objeto, mas
+        /// nem todo objeto pode ser uma string.
+        /// /// Referencia:https://docs.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/explicit
+        /// </summary>
+        /// <param name="customerName"></param>
+        public static explicit operator CustomerName(string customerName)
+        {
+            return Create(customerName).Value;
+        }
     }
 }
