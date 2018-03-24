@@ -56,7 +56,7 @@ namespace Logic.Entities
         }
 
         /// <summary>
-        /// Esse metodo nos permite criar um Value Object atraves da string passada por parametro.
+        /// Esse metodo nos permite criar um Value Object explicitamente atraves da string passada por parametro.
         /// Nem toda string pode ser um E-mail valido, por isso precisa ser feito explicitamente.
         /// Exemplo: string str = (string)obj; -> Nesse caso, toda string pode ser um objeto, mas
         /// nem todo objeto pode ser uma string.

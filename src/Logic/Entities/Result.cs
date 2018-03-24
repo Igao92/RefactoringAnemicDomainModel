@@ -16,7 +16,7 @@ namespace Logic.Entities
             if (!isSuccess && error == string.Empty)
                 throw new InvalidOperationException();
 
-            IsSuccess = IsSuccess;
+            IsSuccess = isSuccess;
             Error = error;
         }
 

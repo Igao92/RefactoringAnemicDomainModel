@@ -1,38 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logic.Entities
 {
-    public class CustomerName : ValueObject<CustomerName>
+    public class Dollars : ValueObject<Dollars>
     {
-        public string Value { get; }
+        private const decimal MaxDollarAmount = 1_000_000; //1 Million
 
-        private CustomerName(string value)
+        public decimal Value{ get; set; }
+
+        public Dollars(decimal value)
         {
             Value = value;
         }
 
-        public static Result<CustomerName> Create(string customerName)
+        public static Result<Dollars> Create(decimal dollarAmount)
         {
-            customerName = (customerName ?? string.Empty).Trim();
+            if (dollarAmount < 0)
+                return Result.Fail<Dollars>("Dollar amount cannot be negative");
 
-            if (customerName.Length == 0)
-                return Result.Fail<CustomerName>("Customer name should not be empty.");
+            if (dollarAmount > MaxDollarAmount)
+                return Result.Fail<Dollars>($"Dollar amount cannot be greater than {MaxDollarAmount}");
 
-            if (customerName.Length > 100)
-                return Result.Fail<CustomerName>("Customer is too long.");
+            if (dollarAmount % 0.01m > 0)
+                return Result.Fail<Dollars>($"Dollar amount cannot be greater than {MaxDollarAmount}");
 
-            return Result.Ok(new CustomerName(customerName));
+            return Result.Ok(new Dollars(dollarAmount));
 
         }
 
-        protected override bool EqualsCore(CustomerName other)
+        protected override bool EqualsCore(Dollars other)
         {
-            return Value.Equals(other.Value, StringComparison.InvariantCultureIgnoreCase);
+            return Value == other.Value;
         }
 
         protected override int GetHashCodeCore()
         {
             return Value.GetHashCode();
+        }
+
+        public static Dollars Of(decimal dollarAmount)
+        {
+            return Create(dollarAmount).Value;
         }
 
         //Conversoes do objeto.
@@ -48,9 +60,9 @@ namespace Logic.Entities
         /// Referencia:https://docs.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/implicit
         /// </summary>
         /// <param name="customerName"></param>
-        public static implicit operator string(CustomerName customerName)
+        public static implicit operator decimal(Dollars dollars)
         {
-            return customerName.Value;
+            return dollars.Value;
         }
 
         /// <summary>
@@ -61,9 +73,19 @@ namespace Logic.Entities
         /// /// Referencia:https://docs.microsoft.com/pt-br/dotnet/csharp/language-reference/keywords/explicit
         /// </summary>
         /// <param name="customerName"></param>
-        public static explicit operator CustomerName(string customerName)
+        //public static explicit operator Dollars(decimal dollars)
+        //{
+        //    return Create(dollars).Value;
+        //}
+
+        public static Dollars operator *(Dollars dollars, decimal multiplier)
         {
-            return Create(customerName).Value;
+            return new Dollars(dollars * multiplier);
+        }
+
+        public static Dollars operator +(Dollars dollars1, Dollars dollars2)
+        {
+            return new Dollars(dollars1.Value + dollars2.Value);
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Api.Controllers
                 {
                     Name = customerNameOnError.Value,
                     Email = emailNameOnError.Value,
-                    MoneySpent = 0,
+                    MoneySpent = Dollars.Of(0),
                     Status = CustomerStatus.Regular,
                     StatusExpirationDate = null
                 };

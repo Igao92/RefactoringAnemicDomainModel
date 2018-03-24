@@ -24,7 +24,15 @@ namespace Logic.Entities
         }
         public virtual CustomerStatus Status { get; set; }
         public virtual DateTime? StatusExpirationDate { get; set; }
-        public virtual decimal MoneySpent { get; set; }
+
+        private decimal _moneySpent;
+        public virtual Dollars MoneySpent
+        {
+            //get => Dollars.Create(_moneySpent).Value;
+            //set => _moneySpent = value.Value;
+            get => Dollars.Of(_moneySpent); //Conversao explicita;
+            set => _moneySpent = value; //Conversao implicita;
+        }
         public virtual IList<PurchasedMovie> PurchasedMovies { get; set; }
     }
 }
