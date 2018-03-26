@@ -23,7 +23,14 @@ namespace Logic.Entities
             set => _email = value; //Conversao implicita;
         }
         public virtual CustomerStatus Status { get; set; }
-        public virtual DateTime? StatusExpirationDate { get; set; }
+
+        private DateTime? _statusExpirationDate;
+        public virtual ExpirationDate StatusExpirationDate {
+            //get => ExpirationDate.Create(_statusExpirationDate).Value;
+            //set => _statusExpirationDate = value.Value;
+            get => (ExpirationDate)_statusExpirationDate;//Conversao explicita;
+            set => _statusExpirationDate = value;//Conversao implicita;
+        }
 
         private decimal _moneySpent;
         public virtual Dollars MoneySpent
