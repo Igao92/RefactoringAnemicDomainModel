@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Logic.Entities
 {
@@ -38,11 +39,18 @@ namespace Logic.Entities
             //get => Dollars.Create(_moneySpent).Value;
             //set => _moneySpent = value.Value;
             get => Dollars.Of(_moneySpent); //Conversao explicita;
-            set => _moneySpent = value; //Conversao implicita;
+            protected set => _moneySpent = value; //Conversao implicita;
         }
-        public virtual IList<PurchasedMovie> PurchasedMovies { get; set; }
 
-        public Customer(CustomerName name, Email email)
+        private readonly IList<PurchasedMovie> _purchasedMovies;
+        public virtual IReadOnlyList<PurchasedMovie> PurchasedMovies => _purchasedMovies.ToList();
+
+        protected Customer()
+        {
+            _purchasedMovies = new List<PurchasedMovie>();
+        }
+
+        public Customer(CustomerName name, Email email) : this() //this() Chama o construtor `protect` garantindo que _purchasedMovies seja instanciado.
         {
             _name = name ?? throw new ArgumentException(nameof(name));
             _email = email ?? throw new ArgumentException(nameof(email));
@@ -52,9 +60,20 @@ namespace Logic.Entities
             StatusExpirationDate = null;
         }
 
-        protected Customer()
+        //public virtual void AddPurchasedMovie(PurchasedMovie purchasedMovie, Dollars price)
+        public virtual void AddPurchasedMovie(Movie movie, ExpirationDate expirationDate, Dollars price)
         {
+            var purchasedMovie = new PurchasedMovie
+            {
+                MovieId = movie.Id,
+                CustomerId = Id,
+                ExpirationDate = expirationDate,
+                Price = price,
+                PurchaseDate = DateTime.UtcNow
+            };
 
+            _purchasedMovies.Add(purchasedMovie);
+            MoneySpent += price;
         }
     }
 }
