@@ -41,5 +41,20 @@ namespace Logic.Entities
             set => _moneySpent = value; //Conversao implicita;
         }
         public virtual IList<PurchasedMovie> PurchasedMovies { get; set; }
+
+        public Customer(CustomerName name, Email email)
+        {
+            _name = name ?? throw new ArgumentException(nameof(name));
+            _email = email ?? throw new ArgumentException(nameof(email));
+
+            MoneySpent = Dollars.Of(0);
+            Status = CustomerStatus.Regular;
+            StatusExpirationDate = null;
+        }
+
+        protected Customer()
+        {
+
+        }
     }
 }
