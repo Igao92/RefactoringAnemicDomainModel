@@ -21,17 +21,10 @@ namespace Logic.Entities
             //get => Email.Create(_email).Value;
             //set => _email = value.Value;
             get => (Email)_email; //Conversao explicita;
-            set => _email = value; //Conversao implicita;
+            protected set => _email = value; //Conversao implicita;
         }
-        public virtual CustomerStatus Status { get; set; }
 
-        private DateTime? _statusExpirationDate;
-        public virtual ExpirationDate StatusExpirationDate {
-            //get => ExpirationDate.Create(_statusExpirationDate).Value;
-            //set => _statusExpirationDate = value.Value;
-            get => (ExpirationDate)_statusExpirationDate;//Conversao explicita;
-            set => _statusExpirationDate = value;//Conversao implicita;
-        }
+        public CustomerStatus Status { get; set; }
 
         private decimal _moneySpent;
         public virtual Dollars MoneySpent
@@ -57,7 +50,6 @@ namespace Logic.Entities
 
             MoneySpent = Dollars.Of(0);
             Status = CustomerStatus.Regular;
-            StatusExpirationDate = null;
         }
 
         //public virtual void AddPurchasedMovie(PurchasedMovie purchasedMovie, Dollars price)
