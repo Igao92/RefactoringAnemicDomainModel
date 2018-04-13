@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Logic.Entities;
 
 namespace Logic.Services
@@ -47,22 +46,6 @@ namespace Logic.Services
 
             customer.AddPurchasedMovie(movie, expirationDate, price);
             //customer.AddPurchasedMovie(purchasedMovie, price);
-        }
-
-        public bool PromoteCustomer(Customer customer)
-        {
-            // at least 2 active movies during the last 30 days
-            if (customer.PurchasedMovies.Count(x => x.ExpirationDate == ExpirationDate.Infinite
-                                                 || x.ExpirationDate.Date >= DateTime.UtcNow.AddDays(-30)) < 2)
-                return false;
-
-            // at least 100 dollars spent during the last year
-            if (customer.PurchasedMovies.Where(x => x.PurchaseDate > DateTime.UtcNow.AddYears(-1)).Sum(x => x.Price) < 100m)
-                return false;
-
-            customer.Status = customer.Status.Promote();
-
-            return true;
         }
     }
 }
