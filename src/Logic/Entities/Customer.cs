@@ -53,8 +53,11 @@ namespace Logic.Entities
         }
 
         //public virtual void AddPurchasedMovie(PurchasedMovie purchasedMovie, Dollars price)
-        public virtual void AddPurchasedMovie(Movie movie, ExpirationDate expirationDate, Dollars price)
+        public virtual void PurchasedMovie(Movie movie)
         {
+            ExpirationDate expirationDate = movie.GetExpirationDate();
+            Dollars price = movie.CalculatePrice(Status);
+
             var purchasedMovie = new PurchasedMovie(movie, this, price, expirationDate);
             _purchasedMovies.Add(purchasedMovie);
             MoneySpent += price;
