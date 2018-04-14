@@ -307,7 +307,6 @@ C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\bin\Debug\net462
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\bin\Debug\net462\FluentNHibernate.pdb
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\bin\Debug\net462\FluentNHibernate.xml
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\bin\Debug\net462\Iesi.Collections.xml
-C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.csprojResolveAssemblyReference.cache
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.exe.config
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.csproj.CoreCompileInputs.cache
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.AssemblyInfoInputs.cache
@@ -315,3 +314,4 @@ C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.csproj.CopyComplete
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.exe
 C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.pdb
+C:\Users\Igor\Source\Repos\RefactoringAnemicDomainModel\src\Api\obj\Debug\net462\Api.csprojAssemblyReference.cache
