@@ -15,16 +15,10 @@ namespace Logic.Entities
             set => _name = value; //Conversao implicita;
         }
 
-        private string _email;
-        public virtual Email Email
-        {
-            //get => Email.Create(_email).Value;
-            //set => _email = value.Value;
-            get => (Email)_email; //Conversao explicita;
-            protected set => _email = value; //Conversao implicita;
-        }
+        private readonly string _email;
+        public virtual Email Email => (Email)_email; //Conversao explicita;
 
-        public CustomerStatus Status { get; set; }
+        public CustomerStatus Status { get; protected set; }
 
         private decimal _moneySpent;
         public virtual Dollars MoneySpent
