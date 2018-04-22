@@ -20,7 +20,8 @@ namespace Logic.Mappings
         {
             public TwoDaysMovieMap()
             {
-                DiscriminatorValue(LicensingModel.TwoDays);
+                DiscriminatorValue((int)LicensingModel.TwoDays);
+                //DiscriminatorValue(1);
             }
         }
 
@@ -28,7 +29,8 @@ namespace Logic.Mappings
         {
             public LifeLongMovieMap()
             {
-                DiscriminatorValue(LicensingModel.LifeLong);
+                DiscriminatorValue((int)LicensingModel.LifeLong);
+                //DiscriminatorValue(2);
             }
         }
     }

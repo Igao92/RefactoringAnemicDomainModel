@@ -18,7 +18,7 @@ namespace Logic.Entities
         private readonly string _email;
         public virtual Email Email => (Email)_email; //Conversao explicita;
 
-        public CustomerStatus Status { get; protected set; }
+        public virtual CustomerStatus Status { get; protected set; }
 
         private decimal _moneySpent;
         public virtual Dollars MoneySpent
