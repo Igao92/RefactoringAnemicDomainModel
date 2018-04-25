@@ -46,9 +46,17 @@ namespace Logic.Entities
             Status = CustomerStatus.Regular;
         }
 
+        public virtual bool HasPurchasedMovie(Movie movie)
+        {
+            return PurchasedMovies.Any(x => x.Movie == movie && !x.ExpirationDate.IsExpired);
+        }
+
         //public virtual void AddPurchasedMovie(PurchasedMovie purchasedMovie, Dollars price)
         public virtual void PurchasedMovie(Movie movie)
         {
+            if (HasPurchasedMovie(movie))
+                throw new Exception();
+
             ExpirationDate expirationDate = movie.GetExpirationDate();
             Dollars price = movie.CalculatePrice(Status);
 
@@ -57,21 +65,26 @@ namespace Logic.Entities
             MoneySpent += price;
         }
 
-        public virtual bool Promote()
+        public virtual Result CanPromote()
         {
-            // at least 2 active movies during the last 30 days
-            if (PurchasedMovies.Count(x => x.ExpirationDate == ExpirationDate.Infinite
-                                                 || x.ExpirationDate.Date >= DateTime.UtcNow.AddDays(-30)) < 2)
-                return false;
+            if (Status.IsAdvanced)
+                return Result.Fail("The customer already has the Advanced status.");
 
-            // at least 100 dollars spent during the last year
+            if (PurchasedMovies.Count(x => x.ExpirationDate == ExpirationDate.Infinite || x.ExpirationDate.Date >= DateTime.UtcNow.AddDays(-30)) < 2)
+                return Result.Fail("The customer has to have at least 2 active movies during the last 30 days.");
+
             if (PurchasedMovies.Where(x => x.PurchaseDate > DateTime.UtcNow.AddYears(-1)).Sum(x => x.Price) < 100m)
-                return false;
+                return Result.Fail("The customer has to have at least 100 dollars spent during the last year.");
+
+            return Result.Ok();
+        }
+
+        public virtual void Promote()
+        {
+            if (CanPromote().IsFailure)
+                throw new Exception();
 
             Status = Status.Promote();
-
-            return true;
         }
     }
 }
- 

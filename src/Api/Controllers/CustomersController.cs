@@ -27,9 +27,7 @@ namespace Api.Controllers
         {
             Customer customer = _customerRepository.GetById(id);
             if (customer == null)
-            {
                 return NotFound();
-            }
 
             var dto = new CustomerDto
             {
@@ -84,14 +82,10 @@ namespace Api.Controllers
             var result = Result.Combine(customerNameOnError, emailNameOnError);
 
             if (result.IsFailure)
-            {
                 return Error(result.Error);
-            }
-
+            
             if (_customerRepository.GetByEmail(emailNameOnError.Value) != null)
-            {
                 return Error("Email is already in use: " + item.Email);
-            }
 
             var customer = new Customer(customerNameOnError.Value, emailNameOnError.Value);
 
@@ -107,15 +101,11 @@ namespace Api.Controllers
             var customerNameOnError = CustomerName.Create(item.Name);
 
             if (customerNameOnError.IsFailure)
-            {
                 return Error(customerNameOnError.Error);
-            }
 
             Customer customer = _customerRepository.GetById(id);
             if (customer == null)
-            {
                 return Error("Invalid customer id: " + id);
-            }
 
             customer.Name = customerNameOnError.Value;
 
@@ -127,21 +117,15 @@ namespace Api.Controllers
         public IActionResult PurchaseMovie(long id, [FromBody] long movieId)
         {
             Movie movie = _movieRepository.GetById(movieId);
-            //if (movie == null)
-            //{
-            //    return Error("Invalid movie id: " + movieId);
-            //}
+            if (movie == null)
+                return Error("Invalid movie id: " + movieId);
 
             Customer customer = _customerRepository.GetById(id);
             if (customer == null)
-            {
                 return Error("Invalid customer id: " + id);
-            }
 
-            if (customer.PurchasedMovies.Any(x => x.Movie.Id == movie.Id && !x.ExpirationDate.IsExpired))
-            {
+            if (customer.HasPurchasedMovie(movie))
                 return Error("The movie is already purchased: " + movie.Name);
-            }
 
             customer.PurchasedMovie(movie);
 
@@ -154,20 +138,14 @@ namespace Api.Controllers
         {
             Customer customer = _customerRepository.GetById(id);
             if (customer == null)
-            {
                 return Error("Invalid customer id: " + id);
-            }
 
-            if (customer.Status.IsAdvanced)
-            {
-                return Error("The customer already has the Advanced status");
-            }
+            Result promotionCheck = customer.CanPromote();
 
-            bool success = customer.Promote();
-            if (!success)
-            {
-                return Error("Cannot promote the customer");
-            }
+            if (promotionCheck.IsFailure)
+                return Error(promotionCheck.Error);
+
+            customer.Promote();
 
             return Ok();
         }
